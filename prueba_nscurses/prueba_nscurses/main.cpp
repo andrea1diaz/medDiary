@@ -14,6 +14,8 @@ using namespace std;
 
 
 #include <ncurses.h>
+#include "sources/laboratorio.cpp"
+#include "sources/bioquimica_orina.cpp"
 
 int main()
 {

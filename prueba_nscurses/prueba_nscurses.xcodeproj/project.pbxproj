@@ -24,6 +24,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C66E77EF20DD471B000FB3DD /* headers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = headers; sourceTree = "<group>"; };
+		C66E77F020DD471B000FB3DD /* sources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sources; sourceTree = "<group>"; };
 		C6B6EB6E20D2EE6800EFAEBD /* prueba_nscurses */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = prueba_nscurses; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6B6EB7120D2EE6800EFAEBD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		C6B6EB7920D2F4A600EFAEBD /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
@@ -61,6 +63,8 @@
 		C6B6EB7020D2EE6800EFAEBD /* prueba_nscurses */ = {
 			isa = PBXGroup;
 			children = (
+				C66E77EF20DD471B000FB3DD /* headers */,
+				C66E77F020DD471B000FB3DD /* sources */,
 				C6B6EB7120D2EE6800EFAEBD /* main.cpp */,
 			);
 			path = prueba_nscurses;
