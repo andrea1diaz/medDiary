@@ -4,6 +4,7 @@
 
 #ifndef P1_BIOQUIMICA_H
 #define P1_BIOQUIMICA_H
+
 #include "laboratorio.h"
 #include <string>
 class Laboratorio;
@@ -81,7 +82,7 @@ public:
 
     //--- setters
     void setAcidoUrico(double _acidoUrico) { acidoUrico =_acidoUrico; }
-    void setADA(double)
+    //void setADA(double)
     void setGlucosa(double _glucosa) { glucosa = _glucosa;}
     void setUrea(double _urea) { urea = _urea;}
     void setCreatinina(double _creatinina) { creatinina = _creatinina ;}

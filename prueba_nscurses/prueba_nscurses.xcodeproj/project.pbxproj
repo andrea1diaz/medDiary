@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C65B726E20E441A800985A81 /* libmenu.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C65B726D20E441A800985A81 /* libmenu.tbd */; };
 		C6B6EB7220D2EE6800EFAEBD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6B6EB7120D2EE6800EFAEBD /* main.cpp */; };
 		C6B6EB7A20D2F4A600EFAEBD /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C6B6EB7920D2F4A600EFAEBD /* libcurses.tbd */; };
 /* End PBXBuildFile section */
@@ -24,10 +25,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C65B726D20E441A800985A81 /* libmenu.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libmenu.tbd; path = usr/lib/libmenu.tbd; sourceTree = SDKROOT; };
 		C66E77EF20DD471B000FB3DD /* headers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = headers; sourceTree = "<group>"; };
 		C66E77F020DD471B000FB3DD /* sources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sources; sourceTree = "<group>"; };
 		C6B6EB6E20D2EE6800EFAEBD /* prueba_nscurses */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = prueba_nscurses; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6B6EB7120D2EE6800EFAEBD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C6B6EB7120D2EE6800EFAEBD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		C6B6EB7920D2F4A600EFAEBD /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -36,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C65B726E20E441A800985A81 /* libmenu.tbd in Frameworks */,
 				C6B6EB7A20D2F4A600EFAEBD /* libcurses.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,6 +76,7 @@
 		C6B6EB7820D2F4A600EFAEBD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C65B726D20E441A800985A81 /* libmenu.tbd */,
 				C6B6EB7920D2F4A600EFAEBD /* libcurses.tbd */,
 			);
 			name = Frameworks;
