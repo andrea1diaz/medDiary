@@ -2,7 +2,7 @@
 // Created by Andrea Diaz ♡ on 6/8/18.
 //
 
-#include "/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/headers/bioquimica_orina.h"
+#include "../headers/bioquimica_orina.h"
 #include "/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/headers/laboratorio.h"
 #include <iostream>
 

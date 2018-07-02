@@ -47,8 +47,8 @@ public:
 
 
 
-            //--- setters
-             void setcoproParasitarioFuncional(double _coproParasitarioFuncional) { coproParasitarioFuncional = _coproParasitarioFuncional;}
+    //--- setters
+    void setcoproParasitarioFuncional(double _coproParasitarioFuncional) { coproParasitarioFuncional = _coproParasitarioFuncional;}
     void setCoprocultivo(double _coprocultivo) { coprocultivo = _coprocultivo;}
     void setLeucocitos(double _leucocitos) { leucocitos = _leucocitos;}
     void setParasitologicoSimple(double _parasitologicoSimple) { parasitologicoSimple = _parasitologicoSimple ;}
