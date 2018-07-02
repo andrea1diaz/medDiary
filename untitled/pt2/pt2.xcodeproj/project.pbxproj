@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C65B728720EABB8D00985A81 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C65B728620EABB8D00985A81 /* main.cpp */; };
+		C65B728F20EABBEE00985A81 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C65B728E20EABBEE00985A81 /* libcurses.tbd */; };
+		C65B729120EABBF400985A81 /* libform.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C65B729020EABBF400985A81 /* libform.tbd */; };
+		C65B729320EADAD600985A81 /* libmenu.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C65B729220EADAD600985A81 /* libmenu.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,9 @@
 /* Begin PBXFileReference section */
 		C65B728320EABB8D00985A81 /* pt2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pt2; sourceTree = BUILT_PRODUCTS_DIR; };
 		C65B728620EABB8D00985A81 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C65B728E20EABBEE00985A81 /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
+		C65B729020EABBF400985A81 /* libform.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libform.tbd; path = usr/lib/libform.tbd; sourceTree = SDKROOT; };
+		C65B729220EADAD600985A81 /* libmenu.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libmenu.tbd; path = usr/lib/libmenu.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +38,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C65B729320EADAD600985A81 /* libmenu.tbd in Frameworks */,
+				C65B729120EABBF400985A81 /* libform.tbd in Frameworks */,
+				C65B728F20EABBEE00985A81 /* libcurses.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +52,7 @@
 			children = (
 				C65B728520EABB8D00985A81 /* pt2 */,
 				C65B728420EABB8D00985A81 /* Products */,
+				C65B728D20EABBEE00985A81 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +70,16 @@
 				C65B728620EABB8D00985A81 /* main.cpp */,
 			);
 			path = pt2;
+			sourceTree = "<group>";
+		};
+		C65B728D20EABBEE00985A81 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C65B729220EADAD600985A81 /* libmenu.tbd */,
+				C65B729020EABBF400985A81 /* libform.tbd */,
+				C65B728E20EABBEE00985A81 /* libcurses.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
