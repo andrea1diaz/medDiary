@@ -29,7 +29,7 @@ int starty = 0;
 char *choices[] = {
     "Ficha Medica",
     "Doctores",
-    "Laboratios",
+    "Laboratorios",
     "Citas Medicas",
     "Exit",
 };
@@ -107,7 +107,7 @@ static char* trim_whitespaces(char *str)
 
 //----------- navegador del form
 static FORM *ficha_medica_form;
-static WINDOW *ficha_medica, *ficha_medica_body, *barra;
+static WINDOW *ficha_medica, *ficha_medica_body, *barra, *doctores_win;
 static FIELD *ficha_medica_fields[25];
 static void driver(int ch)
 {
@@ -151,30 +151,10 @@ static void driver(int ch)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //-----------------------------------------------------
 int main()
 {
-    WINDOW *menu_win;
+    WINDOW *menu_win, *laboratorio_win, *lab;
     //FORM *ficha_medica_form;
     //FIELD *ficha_medica_fields[25];
     
@@ -209,6 +189,7 @@ int main()
     
     menu_win = newwin(HEIGHT, WIDTH, starty, startx);
     keypad(menu_win, TRUE);
+    keypad(ficha_medica, TRUE);
     refresh();
     menu(menu_win, highlight);
     while(1)
@@ -248,8 +229,6 @@ int main()
                     barra = derwin(ficha_medica_body, 3, 78, 20, 1);
                     assert(barra != NULL);
                     box(barra, 0, 0);
-                    scrollok(ficha_medica,TRUE);
-                    idlok(ficha_medica, true);
                     refresh();
                     mvwprintw(ficha_medica_body, 1, 2, "Ficha Médica");
                     //--------- pag 1
@@ -396,8 +375,38 @@ int main()
                 //------- Doctores
                 if (choice == 2)
                 {
+                    wrefresh(doctores_win);
                     clear();
                     refresh();
+                    doctores_win = newwin(24, 80, 0, 0);
+                    assert(doctores_win != NULL);
+                    
+                    refresh();
+                    mvwprintw(doctores_win, 1, 2, "Doctores");
+                    box(doctores_win, 0, 0);
+                    
+                    
+                    refresh();
+                    wrefresh(doctores_win);
+                    continue;
+                }
+                
+                //------- Laboratorios
+                if (choice == 3)
+                {
+                    clear();
+                    refresh();
+                    laboratorio_win = newwin(24, 80, 0, 0);
+                    assert(laboratorio_win != NULL);
+                    lab = derwin(laboratorio_win, 16, 78, 3, 1);
+                    assert(lab != NULL);
+                    box(lab, 0, 0);
+                    refresh();
+                    mvwprintw(laboratorio_win, 1, 2, "Laboratorios");
+                    
+                    
+                    refresh();
+                    wrefresh(laboratorio_win);
                 }
                 
             default:
