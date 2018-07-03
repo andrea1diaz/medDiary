@@ -7,9 +7,7 @@
 #include "laboratorio.h"
 #include <string>
 
-
 using namespace std;
-
 
 class Hematologia:public Laboratorio {
 private:
@@ -28,7 +26,6 @@ private:
     double proteinaS;
     double reticulocitos;
     double vitaminaB12;
-
 
 public:
     //--- metodos de acceso
@@ -55,8 +52,6 @@ public:
                 double _reticulocitos,
                 double _vitaminaB12);
 
-
-
     //--- setters
     void setAcidoFolicoIntraeritrocitario(double _acidoFolicoIntraeritrocitario) { acidoFolicoIntraeritrocitario = _acidoFolicoIntraeritrocitario;}
     void setAcidoFolicoSerico(double _acidoFolicoSerico) { acidoFolicoSerico = _acidoFolicoSerico;}
@@ -74,7 +69,6 @@ public:
     void setReticulocitos(double _reticulocitos) { reticulocitos = _reticulocitos;}
     void setVitaminaB12(double _vitaminaB12) { vitaminaB12 = _vitaminaB12;}
 
-
     //--getters
     double getAcidoFolicoIntraeritrocitario() { return acidoFolicoIntraeritrocitario;}
     double getAcidoFolicoSerico() { return acidoFolicoSerico;}
@@ -91,7 +85,6 @@ public:
     double getProteinaS() { return proteinaS;}
     double getReticulocitos() { return reticulocitos;}
     double getVitaminaB12() { return vitaminaB12;}
-
 
     void ImprimirHematologia();
 
