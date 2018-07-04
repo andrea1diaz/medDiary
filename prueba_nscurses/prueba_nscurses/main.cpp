@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <ncurses.h>
+#include <stdlib.h>
+#include <fstream>
 //#include <pdcurses.h>
 #include <form.h>
 #include <menu.h>
@@ -17,6 +19,7 @@
 #include "sources/laboratorio.cpp"
 #include "sources/bioquimica_orina.cpp"
 
+#define FILENAME “ficha_medica.dat”
 
 //----- menu
 #define CTRLD 4
@@ -65,15 +68,17 @@ void botones (WINDOW *barra, int highlight)
 {
     int x, y;
     
-    x = 6;
-    y = 2;
+    x = 5;
+    y = 1;
     box(barra, 0, 0);
     for(int i = 0; i < n_nextt; ++i)
-    {    if(highlight == i + 1) /* High light the present choice */
-    {    wattron(barra, A_REVERSE);
-        mvwprintw(barra, y, x, "%s", nextt[i]);
-        wattroff(barra, A_REVERSE);
-    }
+    {
+        if(highlight == i + 1) /* High light the present choice */
+        {
+            //wattron(barra, A_REVERSE);
+            mvwprintw(barra, y, x, "%s", nextt[i]);
+            //wattroff(barra, A_REVERSE);
+        }
     else
         mvwprintw(barra, y, x, "%s", nextt[i]);
         ++y;
@@ -150,19 +155,19 @@ static void driver(int ch)
 }
 
 
-
 //-----------------------------------------------------
 int main()
 {
     WINDOW *menu_win, *laboratorio_win, *lab;
     //FORM *ficha_medica_form;
     //FIELD *ficha_medica_fields[25];
+    MEVENT click;
     
     char mesg[]="Med Diary";
     int row,col;
     int highlight = 1;
     int choice = 0;
-    int c, ch;
+    int c, ch, gh;
     
     //------ inicio del programa
     initscr();                /* start the curses mode */
@@ -170,6 +175,7 @@ int main()
     noecho();
     cbreak();
     keypad(stdscr, TRUE);
+    mousemask(ALL_MOUSE_EVENTS,NULL);
     
     //------ barra de inicio
     getmaxyx(stdscr,row,col);
@@ -192,6 +198,7 @@ int main()
     keypad(ficha_medica, TRUE);
     refresh();
     menu(menu_win, highlight);
+    
     while(1)
     {    c = wgetch(menu_win);
         switch(c)
@@ -225,12 +232,33 @@ int main()
                     box(ficha_medica_body, 0, 0);
                     ficha_medica = derwin(ficha_medica_body, 16, 78, 3, 1);
                     assert(ficha_medica != NULL);
-                    //box(ficha_medica, 0, 0);
-                    barra = derwin(ficha_medica_body, 3, 78, 20, 1);
+                    box(ficha_medica, 0, 0);
+                    barra = derwin(ficha_medica_body, 4, 20, 19, 58);
                     assert(barra != NULL);
                     box(barra, 0, 0);
+                    botones(barra, highlight);
                     refresh();
                     mvwprintw(ficha_medica_body, 1, 2, "Ficha Médica");
+                    
+                    //--------- menu de abajo
+                    while(1)
+                    {    gh = wgetch(barra);
+                        if (ch == KEY_MOUSE)
+                        {
+                            clear();
+                            getmouse(&click);
+                            switch (click.bstate)
+                            {
+                                case KEY_MOUSE:
+                                    if (
+                                    break;
+                                    
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    
                     //--------- pag 1
                     // FIELD *new_field(int height, int width, int toprow, int leftcol, int offscreen, int nbuffers);
                     ficha_medica_fields[0] = new_field(1, 20, 0, 1, 0, 0);
