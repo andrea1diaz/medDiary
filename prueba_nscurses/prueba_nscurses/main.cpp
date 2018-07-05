@@ -30,7 +30,6 @@ char *choices[] = {
     "Ficha Medica",
     "Doctores",
     "Laboratorios",
-    "Citas Medicas",
     "Exit",
 };
 
@@ -65,8 +64,8 @@ void menu (WINDOW *menu_win, int highlight)
 {
     int x, y;
     
-    x = 2;
-    y = 2;
+    x = 8;
+    y = 3;
     box(menu_win, 0, 0);
     for(int i = 0; i < n_choices; ++i)
     {    if(highlight == i + 1) /* High light the present choice */
