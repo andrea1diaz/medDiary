@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <fstream>
 #include <iostream>
+#include <istream>
 
 using namespace std;
 
@@ -41,8 +42,6 @@ static char* trim_whitespaces(char *str)
 
 static void driver(int ch)
 {
-    int i;
-    
     switch (ch) {
         case KEY_F(2):
         {// Or the current field buffer won't be sync with what is displayed
@@ -50,14 +49,8 @@ static void driver(int ch)
             FHandle.open("windows.txt", ios::out);
             if(FHandle.is_open())
             {
-                for (int i = 0; fields[i]; i = i + 2)
-                {
-                    FHandle << trim_whitespaces(field_buffer(fields[i], 0)) << ": " << trim_whitespaces(field_buffer(fields[i+1], 0)) << "\n";
-                    /*if (field_opts(fields[i]) & O_ACTIVE)
-                        printw("\"\t");
-                    else
-                        printw(":\" ");*/
-                }
+                FHandle << trim_whitespaces(field_buffer(fields[1], 0)) << "\n";
+                FHandle << trim_whitespaces(field_buffer(fields[3], 0)) << "\n";
             }
             else
                 cout << "Not Opened !";
@@ -165,6 +158,17 @@ int main()
     refresh();
     wrefresh(win_body);
     wrefresh(win_form);
+    
+    char new_fields[100];
+    char hi;
+    
+    ifstream fm_read;
+    fm_read.open("windows.txt");
+    
+    fm_read >> new_fields;
+    set_field_buffer(fields[1], 0, new_fields);
+    
+    fm_read.close();
     
     while ((ch = getch()) != KEY_F(1))
         driver(ch);
