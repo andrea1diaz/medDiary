@@ -45,18 +45,18 @@ return 0;
 void bomb(char *message);
 int main(void)
 {
-    FILE *wfile;
+    /*FILE *wfile;
     WINDOW *win;
-    int r;
+    int r;*/
     
     fstream FHandle;
-    FHandle.open("window.dat", ios::out);
+    FHandle.open("window.txt", ios::out);
     if(FHandle.is_open())
         cout << "Opened !";
     else
         cout << "Not Opened !";
 
-    initscr();
+    /*initscr();
     start_color();
     init_pair(1,COLOR_WHITE,COLOR_BLUE);
     
@@ -64,18 +64,18 @@ int main(void)
     refresh();
     getch();
 
-    /* open the file */
+    //open the file
     wfile = fopen(FILENAME,"r");
-    if( wfile==NULL)
+    rif( wfile==NULL)
         bomb("Error reading file\n");
     
-    /* write the window’s data */
+    // write the window’s data
     win = getwin(wfile);
     if( win == NULL )
         bomb("Unable to read/create window\n");
     fclose(wfile);
     wrefresh(win);
-getch();
+getch();*/
 endwin();
 return 0;
 }

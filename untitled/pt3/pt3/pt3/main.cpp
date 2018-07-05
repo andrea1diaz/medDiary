@@ -4,6 +4,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <fstream>
+#include <iostream>
+
+using namespace std;
 
 static FORM *form;
 static FIELD *fields[5];
@@ -41,8 +45,23 @@ static void driver(int ch)
     
     switch (ch) {
         case KEY_F(2):
-            // Or the current field buffer won't be sync with what is displayed
-            form_driver(form, REQ_NEXT_FIELD);
+        {// Or the current field buffer won't be sync with what is displayed
+            fstream FHandle;
+            FHandle.open("windows.txt", ios::out);
+            if(FHandle.is_open())
+            {
+                for (int i = 0; fields[i]; i = i + 2)
+                {
+                    FHandle << trim_whitespaces(field_buffer(fields[i], 0)) << ": " << trim_whitespaces(field_buffer(fields[i+1], 0)) << "\n";
+                    /*if (field_opts(fields[i]) & O_ACTIVE)
+                        printw("\"\t");
+                    else
+                        printw(":\" ");*/
+                }
+            }
+            else
+                cout << "Not Opened !";
+            /*form_driver(form, REQ_NEXT_FIELD);
             form_driver(form, REQ_PREV_FIELD);
             move(LINES-3, 2);
             
@@ -52,12 +71,15 @@ static void driver(int ch)
                 if (field_opts(fields[i]) & O_ACTIVE)
                     printw("\"\t");
                 else
-                    printw(": \"");
+                    printw(":\"");
             }
             
             refresh();
-            pos_form_cursor(form);
-            break;
+        pos_form_cursor(form);
+            break;*/
+             
+             }
+            
             
         case KEY_DOWN:
             form_driver(form, REQ_NEXT_FIELD);
@@ -105,6 +127,7 @@ int main()
     cbreak();
     keypad(stdscr, TRUE);
     
+
     win_body = newwin(24, 80, 0, 0);
     assert(win_body != NULL);
     box(win_body, 0, 0);
@@ -151,7 +174,7 @@ int main()
     free_field(fields[0]);
     free_field(fields[1]);
     free_field(fields[2]);
-    free_field(fields[3]);
+    //free_field(fields[3]);
     delwin(win_form);
     delwin(win_body);
     endwin();
