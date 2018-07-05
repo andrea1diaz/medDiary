@@ -220,6 +220,8 @@ static void driver(int ch)
             
         case KEY_F(2):
         {
+            ficha_medica_form_2 = new_form(ficha_medica_fields_2);
+            assert(ficha_medica_fields_2 != NULL);
             form2(g);
             break;
         }
@@ -297,7 +299,8 @@ static void driver_2(int f)
         case KEY_F(2):
         {
             ficha_medica_form = new_form(ficha_medica_fields);
-            assert(ficha_medica_fields_2 != NULL);
+            assert(ficha_medica_fields != NULL);
+            printw("hi");
             form1(ch);
             break;
         }
@@ -423,6 +426,9 @@ static void lab_driver_1(int f)
 //----------- ficha_medica_form pg. 1
 void form1 (int ch)
 {
+    keypad(stdscr, TRUE);
+    getch();
+    
     int highlight = 1;
     
     clear();
@@ -531,7 +537,7 @@ void form1 (int ch)
     wrefresh(ficha_medica);
     
     
-    char new_fields[100];
+    char new_fields[400];
     
     ifstream fm_read;
     fm_read.open("ficha_medica.txt");
@@ -539,7 +545,7 @@ void form1 (int ch)
     //fm_read >> new_fields;
     //set_field_buffer(ficha_medica_fields[1], 0, new_fields);
     
-    for (int i = 1; ficha_medica_fields[i]; i = i + 2) {
+    for (int i = 1; i < 17; i = i + 2) {
         fm_read >> new_fields;
         set_field_buffer(ficha_medica_fields[i], 0, new_fields);
     }
@@ -895,6 +901,8 @@ int main()
                 //------- Ficha medica
                 if (choice == 1)
                 {
+                    ficha_medica_form = new_form(ficha_medica_fields);
+                    assert(ficha_medica_fields != NULL);
                     form1(ch);
                     break;
                 }
