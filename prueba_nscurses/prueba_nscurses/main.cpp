@@ -18,8 +18,6 @@
 #include "sources/laboratorio.cpp"
 #include "sources/bioquimica_orina.cpp"
 
-#define FILENAME “ficha_medica.dat”
-
 //----- menu
 #define CTRLD 4
 #define WIDTH 30
@@ -46,10 +44,22 @@ char *nextt_2[] = {"GUARDAR(F1)  "
     "MENU(F3)",
 };
 
+const char *choiceslab[] = {
+    "Hematologia",
+    "Bioquimica Sangre",
+    "Bioquimica Orina",
+    "Inmunologia",
+    "Drogas"
+    "Heces",
+};
 
 int n_choices = sizeof(choices) / sizeof(char *);
 int n_nextt = sizeof(nextt) / sizeof(char *);
 int n_nextt_2 = sizeof(nextt_2) / sizeof(char *);
+
+int n_choiceslab = sizeof(choices) / sizeof(char *);
+int n_nexttlab = sizeof(nextt) / sizeof(char *);
+int n_nextt_2lab = sizeof(nextt_2) / sizeof(char *);
 
 void menu (WINDOW *menu_win, int highlight)
 {
@@ -71,6 +81,31 @@ void menu (WINDOW *menu_win, int highlight)
     wrefresh(menu_win);
 }
 
+
+//------- menu lab
+void menulab(WINDOW *menu_winlab, int highlight)
+{
+    int x, y;
+    startx = (80 - WIDTH) / 2;
+    starty = (24 - HEIGHT) / 2;
+    x = 2;
+    y = 2;
+    box(menu_winlab, 0, 0);
+    for (int i = 0; i < n_choiceslab; ++i) {
+        if (highlight == i + 1) /* High light the present choice */
+        {
+            wattron(menu_winlab, A_REVERSE);
+            mvwprintw(menu_winlab, y, x, "%s", choiceslab[i]);
+            wattroff(menu_winlab, A_REVERSE);
+        } else
+            mvwprintw(menu_winlab, y, x, "%s", choiceslab[i]);
+        ++y;
+    }
+    wrefresh(menu_winlab);
+}
+
+
+//--------- barra inferior con opciones
 void botones (WINDOW *barra, int highlight)
 {
     int x, y;
@@ -115,10 +150,22 @@ void botones_2 (WINDOW *barra, int highlight)
     wrefresh(barra);
 }
 
+
+//--------- intro. de variables -------
+//--------- variables de la ficha medica
 static FORM *ficha_medica_form;
 static FORM *ficha_medica_form_2;
 static WINDOW *ficha_medica, *ficha_medica_body, *ficha_medica_2, *ficha_medica_body_2, *barra, *barra_2, *doctores_win;
 static FIELD *ficha_medica_fields[16], *ficha_medica_fields_2[9];
+
+//--------- variables laboratorio ----------------
+static FORM *lab_form;
+static FORM *lab_form_2;
+static WINDOW *lab, *lab_body, *lab_2, *lab_body_2, *barralab, *barra_2lab, *doctores_winlab;
+static FIELD *lab_fields[16], *lab_fields_2[9];
+
+
+
 
 //---------- cambia a espacios el form
 static char* trim_whitespaces(char *str)
@@ -145,11 +192,13 @@ static char* trim_whitespaces(char *str)
 }
 
 //----------- navegador del form
+void form1 (int h);
 void form2 (int g);
 
 static void driver(int ch)
 {
-    int f;
+    int g = 0;
+    
     switch (ch)
     {
         case KEY_F(1):
@@ -170,7 +219,8 @@ static void driver(int ch)
             
         case KEY_F(2):
         {
-            form2(f);
+            form2(g);
+            break;
         }
             
             
@@ -192,12 +242,10 @@ static void driver(int ch)
             form_driver(ficha_medica_form, REQ_NEXT_CHAR);
             break;
         
-            // Delete the char before cursor
         case 127:
             form_driver(ficha_medica_form, REQ_DEL_PREV);
             break;
             
-            // Delete the char under the cursor
         case KEY_DC:
             form_driver(ficha_medica_form, REQ_DEL_CHAR);
             break;
@@ -207,13 +255,143 @@ static void driver(int ch)
             break;
     }
     
+    
     wrefresh(ficha_medica);
 }
 
-//----------- ficha_medica_form pg. 1
-void form1 (int h)
+static void driver_2(int f)
 {
-    int ch;
+    int ch = 0;
+    switch (f)
+    {
+        case KEY_F(1):
+        {
+            fstream fm_file;
+            fm_file.open("ficha_medica2.txt", ios::out);
+            if (fm_file.is_open())
+            {
+                fm_file << trim_whitespaces(field_buffer(ficha_medica_fields_2[1],0)) << "\n";
+                fm_file << trim_whitespaces(field_buffer(ficha_medica_fields_2[3],0)) << "\n";
+                fm_file << trim_whitespaces(field_buffer(ficha_medica_fields_2[6],0)) << "\n";
+                fm_file << trim_whitespaces(field_buffer(ficha_medica_fields_2[8],0)) << "\n";
+                /*for (int i = 1; ficha_medica_fields_2[i]; i = i + 2)
+                 {
+                 fm_file << trim_whitespaces(field_buffer(ficha_medica_fields_2[i], 0));
+                 fm_file << "\n";
+                 }*/
+            }
+            break;
+        }
+            
+        case KEY_F(2):
+        {
+            form1(ch);
+            break;
+        }
+            
+        case KEY_DOWN:
+            form_driver(ficha_medica_form_2, REQ_NEXT_FIELD);
+            form_driver(ficha_medica_form_2, REQ_END_LINE);
+            break;
+            
+        case KEY_UP:
+            form_driver(ficha_medica_form_2, REQ_PREV_FIELD);
+            form_driver(ficha_medica_form_2, REQ_END_LINE);
+            break;
+            
+        case KEY_LEFT:
+            form_driver(ficha_medica_form_2, REQ_PREV_CHAR);
+            break;
+            
+        case KEY_RIGHT:
+            form_driver(ficha_medica_form_2, REQ_NEXT_CHAR);
+            break;
+            
+            // Delete the char before cursor
+        case 127:
+            form_driver(ficha_medica_form_2, REQ_DEL_PREV);
+            break;
+            
+            // Delete the char under the cursor
+        case KEY_DC:
+            form_driver(ficha_medica_form_2, REQ_DEL_CHAR);
+            break;
+            
+        default:
+            form_driver(ficha_medica_form_2, f);
+            break;
+    }
+    
+    wrefresh(ficha_medica_2);
+}
+
+
+
+static void lab_driver_1(int f)
+{
+    int h;
+    
+    switch (f)
+    {
+        case KEY_F(1):
+        {
+            fstream fm_file;
+            fm_file.open("lab.txt", ios::out);
+            if (fm_file.is_open())
+            {
+                /*fm_file << trim_whitespaces(field_buffer(lab_fields[1],0)) << "\n";
+                fm_file << trim_whitespaces(field_buffer(lab_fields[3],0)) << "\n";
+                fm_file << trim_whitespaces(field_buffer(lab_fields[6],0)) << "\n";
+                fm_file << trim_whitespaces(field_buffer(lab_fields[8],0)) << "\n";*/
+                for (int i = 1; lab_fields[i]; i = i + 2)
+                 {
+                 fm_file << trim_whitespaces(field_buffer(lab_fields[i], 0));
+                 fm_file << "\n";
+                 }
+            }
+            break;
+        }
+            
+        case KEY_DOWN:
+            form_driver(lab_form, REQ_NEXT_FIELD);
+            form_driver(lab_form, REQ_END_LINE);
+            break;
+            
+        case KEY_UP:
+            form_driver(lab_form, REQ_PREV_FIELD);
+            form_driver(lab_form, REQ_END_LINE);
+            break;
+            
+        case KEY_LEFT:
+            form_driver(lab_form, REQ_PREV_CHAR);
+            break;
+            
+        case KEY_RIGHT:
+            form_driver(lab_form, REQ_NEXT_CHAR);
+            break;
+            
+        case 127:
+            form_driver(lab_form, REQ_DEL_PREV);
+            break;
+            
+            // Delete the char under the cursor
+        case KEY_DC:
+            form_driver(lab_form, REQ_DEL_CHAR);
+            break;
+            
+        default:
+            form_driver(lab_form, f);
+            break;
+    }
+    
+    wrefresh(lab);
+}
+
+
+
+//----------- ficha_medica_form pg. 1
+void form1 (int ch)
+{
     int highlight = 1;
     
     clear();
@@ -343,62 +521,16 @@ void form1 (int h)
     
     
     
-    unpost_form(ficha_medica_form);
-    free_form(ficha_medica_form);
+    /*unpost_form(ficha_medica_form);
+    //free_form(ficha_medica_form);
     free_field(ficha_medica_fields[0]);
     free_field(ficha_medica_fields[1]);
     free_field(ficha_medica_fields[2]);
     free_field(ficha_medica_fields[3]);
     delwin(ficha_medica);
-    delwin(ficha_medica_body);
+    delwin(ficha_medica_body);*/
 }
 
-static void driver_2(int f)
-{
-    int h;
-    
-    switch (f)
-    {
-        case KEY_F(2):
-        {
-            form1(h);
-        }
-            
-        case KEY_DOWN:
-            form_driver(ficha_medica_form_2, REQ_NEXT_FIELD);
-            form_driver(ficha_medica_form_2, REQ_END_LINE);
-            break;
-            
-        case KEY_UP:
-            form_driver(ficha_medica_form_2, REQ_PREV_FIELD);
-            form_driver(ficha_medica_form_2, REQ_END_LINE);
-            break;
-            
-        case KEY_LEFT:
-            form_driver(ficha_medica_form_2, REQ_PREV_CHAR);
-            break;
-            
-        case KEY_RIGHT:
-            form_driver(ficha_medica_form_2, REQ_NEXT_CHAR);
-            break;
-            
-            // Delete the char before cursor
-        case 127:
-            form_driver(ficha_medica_form_2, REQ_DEL_PREV);
-            break;
-            
-            // Delete the char under the cursor
-        case KEY_DC:
-            form_driver(ficha_medica_form_2, REQ_DEL_CHAR);
-            break;
-            
-        default:
-            form_driver(ficha_medica_form_2, f);
-            break;
-    }
-    
-    wrefresh(ficha_medica_2);
-}
 
 
 
@@ -478,21 +610,193 @@ void form2 (int g)
     wrefresh(ficha_medica_body_2);
     wrefresh(ficha_medica_2);
     
+    char new_fields[100];
+    
+    ifstream fm_read;
+    fm_read.open("ficha_medica2.txt");
+    
+    fm_read >> new_fields;
+    set_field_buffer(ficha_medica_fields_2[1], 0, new_fields);
+    fm_read >> new_fields;
+    set_field_buffer(ficha_medica_fields_2[3], 0, new_fields);
+    fm_read >> new_fields;
+    set_field_buffer(ficha_medica_fields_2[6], 0, new_fields);
+    fm_read >> new_fields;
+    set_field_buffer(ficha_medica_fields_2[8], 0, new_fields);
+    
+    fm_read.close();
+    
     while ((g = getch()))
         driver_2(g);
+}
+
+
+//----------- lab_form pg. 1
+void form1lab (int h)
+{
+    int ch;
+    int highlight = 1;
+    
+    clear();
+    refresh();
+    lab_body = newwin(24, 80, 0, 0);
+    assert(lab_body != NULL);
+    box(lab_body, 0, 0);
+    lab = derwin(lab_body, 16, 78, 3, 1);
+    assert(lab != NULL);
+    box(lab, 0, 0);
+    barra = derwin(lab_body, 3, 78, 20, 1);
+    assert(barra != NULL);
+    box(barra, 0, 0);
+    botones(barra, highlight);
+    refresh();
+    mvwprintw(lab_body, 1, 2, "LABORATORIO");
+    
+    
+    //--------- pag 1
+    // FIELD *new_field(int height, int width, int toprow, int leftcol, int offscreen, int nbuffers);
+    lab_fields[0] = new_field(1, 20, 0, 1, 0, 0);
+    lab_fields[1] = new_field(1, 40, 0, 21, 0, 0);
+    lab_fields[2] = new_field(1, 20, 2, 1, 0, 0);
+    lab_fields[3] = new_field(1, 40, 2, 21, 0, 0);
+    lab_fields[4] = new_field(2, 20, 4, 1, 0, 0);
+    lab_fields[5] = new_field(1, 40, 4, 21, 0, 0);
+    lab_fields[6] = new_field(1, 20, 7, 1, 0, 0);
+    lab_fields[7] = new_field(1, 40, 7, 21, 0, 0);
+    lab_fields[8] = new_field(1, 20, 9, 1, 0, 0);
+    lab_fields[9] = new_field(1, 40, 9, 21, 0, 0);
+    lab_fields[10] = new_field(1, 20, 11, 1, 0, 0);
+    lab_fields[11] = new_field(1, 40, 11, 21, 0, 0);
+    lab_fields[12] = new_field(1, 20, 13, 1, 0, 0);
+    lab_fields[13] = new_field(1, 40, 13, 21, 0, 0);
+    lab_fields[14] = new_field(1, 20, 15, 1, 0, 0);
+    lab_fields[15] = new_field(1, 40, 15, 21, 0, 0);
+    
+    assert(lab_fields[0] != NULL &&
+           lab_fields[1] != NULL &&
+           lab_fields[2] != NULL &&
+           lab_fields[3] != NULL &&
+           lab_fields[4] != NULL &&
+           lab_fields[5] != NULL &&
+           lab_fields[6] != NULL &&
+           lab_fields[7] != NULL &&
+           lab_fields[8] != NULL &&
+           lab_fields[9] != NULL &&
+           lab_fields[10] != NULL &&
+           lab_fields[11] != NULL &&
+           lab_fields[12] != NULL &&
+           lab_fields[13] != NULL &&
+           lab_fields[14] != NULL &&
+           lab_fields[15] != NULL);
+    
+    set_field_buffer(lab_fields[0], 0, "Resultado 1");
+    set_field_buffer(lab_fields[1], 0, "");
+    set_field_buffer(lab_fields[2], 0, "Resultado 2");
+    set_field_buffer(lab_fields[3], 0, "");
+    set_field_buffer(lab_fields[4], 0, "Pesultado 3");
+    set_field_buffer(lab_fields[5], 0, "");
+    set_field_buffer(lab_fields[6], 0, "Resultado 4");
+    set_field_buffer(lab_fields[7], 0, "");
+    set_field_buffer(lab_fields[8], 0, "Resultado 5");
+    set_field_buffer(lab_fields[9], 0, "");
+    set_field_buffer(lab_fields[10], 0, "Resultado 6");
+    set_field_buffer(lab_fields[11], 0, "");
+    set_field_buffer(lab_fields[12], 0, "Resultado 7");
+    set_field_buffer(lab_fields[13], 0, "");
+    set_field_buffer(lab_fields[14], 0, "Resultado 8");
+    set_field_buffer(lab_fields[15], 0, "");
+    
+    set_field_opts(lab_fields[0], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(lab_fields[1], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(lab_fields[2], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(lab_fields[3], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(lab_fields[4], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(lab_fields[5], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(lab_fields[6], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(lab_fields[7], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(lab_fields[8], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(lab_fields[9], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(lab_fields[10], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(lab_fields[11], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(lab_fields[12], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(lab_fields[13], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(lab_fields[14], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(lab_fields[15], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    
+    set_field_back(lab_fields[1], A_UNDERLINE);
+    set_field_back(lab_fields[3], A_UNDERLINE);
+    set_field_back(lab_fields[5], A_UNDERLINE);
+    set_field_back(lab_fields[7], A_UNDERLINE);
+    set_field_back(lab_fields[9], A_UNDERLINE);
+    set_field_back(lab_fields[11], A_UNDERLINE);
+    set_field_back(lab_fields[13], A_UNDERLINE);
+    set_field_back(lab_fields[15], A_UNDERLINE);
+    
+    /*
+     no entiendo que quieres hacer aca, pero si quieres un menu antes de que te pida los resultados tienes que
+     inicializar la variable menu_winlab arriba:
+     WINDOW *menu_winlab;
+     */
+     
+    /*menu_winlab = newwin(HEIGHT, WIDTH, starty, startx);
+    keypad(menu_winlab, TRUE);
+    keypad(ficha_medica, TRUE);
+    refresh();
+    menulab(menu_winlab, highlight);*/
+    
+    lab_form = new_form(lab_fields);
+    assert(lab_form != NULL);
+    set_form_win(lab_form, lab);
+    set_form_sub(lab_form, derwin(lab, 18, 76, 1, 1));
+    post_form(lab_form);
+    
+    refresh();
+    wrefresh(lab_body);
+    wrefresh(lab);
+    
+    
+    char new_fields[100];
+    
+    ifstream fm_read;
+    fm_read.open("lab.txt");
+    
+    //fm_read >> new_fields;
+    //set_field_buffer(ficha_medica_fields[1], 0, new_fields);
+    
+    for (int i = 1; lab_fields[i]; i = i + 2)
+    {
+        fm_read >> new_fields;
+        set_field_buffer(lab_fields[i], 0, new_fields);
+    }
+    
+    
+    fm_read.close();
+    
+    while ((ch = getch()) != KEY_F(12))
+        lab_driver_1(ch);
+    
+    unpost_form(lab_form);
+    free_form(lab_form);
+    free_field(lab_fields[0]);
+    free_field(lab_fields[1]);
+    free_field(lab_fields[2]);
+    free_field(lab_fields[3]);
+    delwin(lab);
+    delwin(lab_body);
 }
 
 
 //-----------------------------------------------------
 int main()
 {
-    WINDOW *menu_win, *laboratorio_win, *lab;
+    WINDOW *menu_win, *lab;
     
     char mesg[]="Med Diary";
     int row,col;
     int highlight = 1;
     int choice = 0;
-    int c, h, f;
+    int c, ch = 0;
+    int a = 0;
     
     //------ inicio del programa
     initscr();
@@ -551,7 +855,7 @@ int main()
                 //------- Ficha medica
                 if (choice == 1)
                 {
-                    form1(h);
+                    form1(ch);
                 }
                 
                 //------- Doctores
@@ -576,19 +880,7 @@ int main()
                 //------- Laboratorios
                 if (choice == 3)
                 {
-                    clear();
-                    refresh();
-                    laboratorio_win = newwin(24, 80, 0, 0);
-                    assert(laboratorio_win != NULL);
-                    lab = derwin(laboratorio_win, 16, 78, 3, 1);
-                    assert(lab != NULL);
-                    box(lab, 0, 0);
-                    refresh();
-                    mvwprintw(laboratorio_win, 1, 2, "Laboratorios");
-                    
-                    
-                    refresh();
-                    wrefresh(laboratorio_win);
+                    form1lab(a);
                 }
                 
             default:

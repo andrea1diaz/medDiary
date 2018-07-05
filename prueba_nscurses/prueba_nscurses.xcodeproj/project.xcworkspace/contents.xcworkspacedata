@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:prueba_nscurses.xcodeproj">
+      location = "group:/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/main_test.cpp">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
