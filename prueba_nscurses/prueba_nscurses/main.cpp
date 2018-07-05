@@ -194,6 +194,7 @@ static char* trim_whitespaces(char *str)
 //----------- navegador del form
 void form1 (int h);
 void form2 (int g);
+int main();
 
 static void driver(int ch)
 {
@@ -220,6 +221,16 @@ static void driver(int ch)
         case KEY_F(2):
         {
             form2(g);
+            break;
+        }
+            
+        case KEY_F(3):
+        {
+            
+            ficha_medica_form = new_form(ficha_medica_fields);
+            assert(ficha_medica_fields != NULL);
+            
+            main();
             break;
         }
             
@@ -285,7 +296,18 @@ static void driver_2(int f)
             
         case KEY_F(2):
         {
+            ficha_medica_form = new_form(ficha_medica_fields);
+            assert(ficha_medica_fields_2 != NULL);
             form1(ch);
+            break;
+        }
+            
+        case KEY_F(3):
+        {
+            ficha_medica_form = new_form(ficha_medica_fields);
+            assert(ficha_medica_fields != NULL);
+            
+            main();
             break;
         }
             
@@ -329,7 +351,7 @@ static void driver_2(int f)
 
 static void lab_driver_1(int f)
 {
-    int h;
+    int h = 0;
     
     switch (f)
     {
@@ -348,7 +370,16 @@ static void lab_driver_1(int f)
                  fm_file << trim_whitespaces(field_buffer(lab_fields[i], 0));
                  fm_file << "\n";
                  }
+            fm_file.close();
             }
+            break;
+        }
+            
+        case KEY_F(3):
+        {
+            lab_form = new_form(lab_fields);
+            assert(lab_fields != NULL);
+            main();
             break;
         }
             
@@ -401,7 +432,7 @@ void form1 (int ch)
     box(ficha_medica_body, 0, 0);
     ficha_medica = derwin(ficha_medica_body, 16, 78, 3, 1);
     assert(ficha_medica != NULL);
-    box(ficha_medica, 0, 0);
+    //box(ficha_medica, 0, 0);
     barra = derwin(ficha_medica_body, 3, 78, 20, 1);
     assert(barra != NULL);
     box(barra, 0, 0);
@@ -522,11 +553,11 @@ void form1 (int ch)
     
     
     /*unpost_form(ficha_medica_form);
-    //free_form(ficha_medica_form);
-    free_field(ficha_medica_fields[0]);
-    free_field(ficha_medica_fields[1]);
-    free_field(ficha_medica_fields[2]);
-    free_field(ficha_medica_fields[3]);
+    free_form(ficha_medica_form);
+    for (int i = 0; ficha_medica_fields[i]; i++)
+    {
+        free_field(ficha_medica_fields[i]);
+    }
     delwin(ficha_medica);
     delwin(ficha_medica_body);*/
 }
@@ -628,6 +659,15 @@ void form2 (int g)
     
     while ((g = getch()))
         driver_2(g);
+    
+    unpost_form(ficha_medica_form_2);
+    free_form(ficha_medica_form_2);
+    for (int i = 0; ficha_medica_fields_2[i]; i++)
+    {
+        free_field(ficha_medica_fields_2[i]);
+    }
+    delwin(ficha_medica_2);
+    delwin(ficha_medica_body_2);
 }
 
 
@@ -789,7 +829,7 @@ void form1lab (int h)
 //-----------------------------------------------------
 int main()
 {
-    WINDOW *menu_win, *lab;
+    WINDOW *menu_win;
     
     char mesg[]="Med Diary";
     int row,col;
@@ -856,6 +896,7 @@ int main()
                 if (choice == 1)
                 {
                     form1(ch);
+                    break;
                 }
                 
                 //------- Doctores
@@ -884,7 +925,6 @@ int main()
                 }
                 
             default:
-                mvprintw(24, 0, "Charcter pressed is = %3d Hopefully it can be printed as '%c'", c, c);
                 refresh();
                 break;
         }
@@ -892,8 +932,7 @@ int main()
         if(choice != 0)    /* User did a choice come out of the infinite loop */
             break;
     }
- 
-    mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
+
     clrtoeol();
 
     //------- corriendo programa
@@ -904,6 +943,7 @@ int main()
     
     
     //------- fin de programa
+    delwin(menu_win);
     endwin();
     //-----------------------
     
