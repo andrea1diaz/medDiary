@@ -145,132 +145,7 @@ static char* trim_whitespaces(char *str)
 }
 
 //----------- navegador del form
-
-
-
-static void driver_2(int f)
-{
-    switch (f)
-    {
-            
-        case KEY_DOWN:
-            form_driver(ficha_medica_form_2, REQ_NEXT_FIELD);
-            form_driver(ficha_medica_form_2, REQ_END_LINE);
-            break;
-            
-        case KEY_UP:
-            form_driver(ficha_medica_form_2, REQ_PREV_FIELD);
-            form_driver(ficha_medica_form_2, REQ_END_LINE);
-            break;
-            
-        case KEY_LEFT:
-            form_driver(ficha_medica_form_2, REQ_PREV_CHAR);
-            break;
-            
-        case KEY_RIGHT:
-            form_driver(ficha_medica_form_2, REQ_NEXT_CHAR);
-            break;
-            
-            // Delete the char before cursor
-        case 127:
-            form_driver(ficha_medica_form_2, REQ_DEL_PREV);
-            break;
-            
-            // Delete the char under the cursor
-        case KEY_DC:
-            form_driver(ficha_medica_form_2, REQ_DEL_CHAR);
-            break;
-            
-        default:
-            form_driver(ficha_medica_form_2, f);
-            break;
-    }
-    
-    wrefresh(ficha_medica_2);
-}
-
-
-
-
-//----------- ficha_medica_form pg. 2
-void form2 (int g)
-{
-    int highlight = 1;
-    
-    wrefresh(ficha_medica_2);
-    clear();
-    refresh();
-    ficha_medica_body_2 = newwin(24, 80, 0, 0);
-    assert(ficha_medica_body_2 != NULL);
-    box(ficha_medica_body_2, 0, 0);
-    ficha_medica_2 = derwin(ficha_medica_body_2, 16, 78, 3, 1);
-    assert(ficha_medica_2 != NULL);
-    box(ficha_medica_2, 0, 0);
-    barra_2 = derwin(ficha_medica_body_2, 3, 78, 20, 1);
-    assert(barra_2 != NULL);
-    box(barra_2, 0, 0);
-    botones_2(barra_2, highlight);
-    mvwprintw(ficha_medica_body_2, 1, 2, "Ficha Médica");
-    
-    ficha_medica_fields_2[0] = new_field(1, 20, 0, 1, 0, 0);
-    ficha_medica_fields_2[1] = new_field(1, 40, 0, 21, 0, 0);
-    ficha_medica_fields_2[2] = new_field(1, 20, 2, 1, 0, 0);
-    ficha_medica_fields_2[3] = new_field(1, 40, 2, 21, 0, 0);
-    ficha_medica_fields_2[4] = new_field(1, 40, 7, 1, 0, 0);
-    ficha_medica_fields_2[5] = new_field(1, 40, 9, 1, 0, 0);
-    ficha_medica_fields_2[6] = new_field(1, 20, 9, 21, 0, 0);
-    ficha_medica_fields_2[7] = new_field(1, 40, 11, 1, 0, 0);
-    ficha_medica_fields_2[8] = new_field(1, 20, 11, 21, 0, 0);
-    
-    assert(ficha_medica_fields_2[0] != NULL &&
-           ficha_medica_fields_2[1] != NULL &&
-           ficha_medica_fields_2[2] != NULL &&
-           ficha_medica_fields_2[3] != NULL &&
-           ficha_medica_fields_2[4] != NULL &&
-           ficha_medica_fields_2[5] != NULL &&
-           ficha_medica_fields_2[6] != NULL &&
-           ficha_medica_fields_2[7] != NULL &&
-           ficha_medica_fields_2[8] != NULL);
-    
-    set_field_buffer(ficha_medica_fields_2[0], 0, "Peso");
-    set_field_buffer(ficha_medica_fields_2[1], 0, "");
-    set_field_buffer(ficha_medica_fields_2[2], 0, "Estatura");
-    set_field_buffer(ficha_medica_fields_2[3], 0, "");
-    set_field_buffer(ficha_medica_fields_2[4], 0, "Contacto de emergencia:");
-    set_field_buffer(ficha_medica_fields_2[5], 0, "Nombres");
-    set_field_buffer(ficha_medica_fields_2[6], 0, "");
-    set_field_buffer(ficha_medica_fields_2[7], 0, "Numero");
-    set_field_buffer(ficha_medica_fields_2[8], 0, "");
-    
-    set_field_opts(ficha_medica_fields_2[0], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
-    set_field_opts(ficha_medica_fields_2[1], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
-    set_field_opts(ficha_medica_fields_2[2], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
-    set_field_opts(ficha_medica_fields_2[3], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
-    set_field_opts(ficha_medica_fields_2[4], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
-    set_field_opts(ficha_medica_fields_2[5], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
-    set_field_opts(ficha_medica_fields_2[6], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
-    set_field_opts(ficha_medica_fields_2[7], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
-    set_field_opts(ficha_medica_fields_2[8], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
-    
-    set_field_back(ficha_medica_fields_2[1], A_UNDERLINE);
-    set_field_back(ficha_medica_fields_2[3], A_UNDERLINE);
-    set_field_back(ficha_medica_fields_2[6], A_UNDERLINE);
-    set_field_back(ficha_medica_fields_2[8], A_UNDERLINE);
-    
-    ficha_medica_form_2 = new_form(ficha_medica_fields_2);
-    assert(ficha_medica_form_2 != NULL);
-    set_form_win(ficha_medica_form_2, ficha_medica_2);
-    set_form_sub(ficha_medica_form_2, derwin(ficha_medica_2, 18, 76, 1, 1));
-    post_form(ficha_medica_form_2);
-    
-    refresh();
-    wrefresh(ficha_medica_body_2);
-    wrefresh(ficha_medica_2);
-    
-    while ((g = getch()))
-        driver_2(g);
-}
-
+void form2 (int g);
 
 static void driver(int ch)
 {
@@ -476,6 +351,135 @@ void form1 (int h)
     free_field(ficha_medica_fields[3]);
     delwin(ficha_medica);
     delwin(ficha_medica_body);
+}
+
+static void driver_2(int f)
+{
+    int h;
+    
+    switch (f)
+    {
+        case KEY_F(2):
+        {
+            form1(h);
+        }
+            
+        case KEY_DOWN:
+            form_driver(ficha_medica_form_2, REQ_NEXT_FIELD);
+            form_driver(ficha_medica_form_2, REQ_END_LINE);
+            break;
+            
+        case KEY_UP:
+            form_driver(ficha_medica_form_2, REQ_PREV_FIELD);
+            form_driver(ficha_medica_form_2, REQ_END_LINE);
+            break;
+            
+        case KEY_LEFT:
+            form_driver(ficha_medica_form_2, REQ_PREV_CHAR);
+            break;
+            
+        case KEY_RIGHT:
+            form_driver(ficha_medica_form_2, REQ_NEXT_CHAR);
+            break;
+            
+            // Delete the char before cursor
+        case 127:
+            form_driver(ficha_medica_form_2, REQ_DEL_PREV);
+            break;
+            
+            // Delete the char under the cursor
+        case KEY_DC:
+            form_driver(ficha_medica_form_2, REQ_DEL_CHAR);
+            break;
+            
+        default:
+            form_driver(ficha_medica_form_2, f);
+            break;
+    }
+    
+    wrefresh(ficha_medica_2);
+}
+
+
+
+
+//----------- ficha_medica_form pg. 2
+void form2 (int g)
+{
+    int highlight = 1;
+    
+    wrefresh(ficha_medica_2);
+    clear();
+    refresh();
+    ficha_medica_body_2 = newwin(24, 80, 0, 0);
+    assert(ficha_medica_body_2 != NULL);
+    box(ficha_medica_body_2, 0, 0);
+    ficha_medica_2 = derwin(ficha_medica_body_2, 16, 78, 3, 1);
+    assert(ficha_medica_2 != NULL);
+    box(ficha_medica_2, 0, 0);
+    barra_2 = derwin(ficha_medica_body_2, 3, 78, 20, 1);
+    assert(barra_2 != NULL);
+    box(barra_2, 0, 0);
+    botones_2(barra_2, highlight);
+    mvwprintw(ficha_medica_body_2, 1, 2, "Ficha Médica");
+    
+    ficha_medica_fields_2[0] = new_field(1, 20, 0, 1, 0, 0);
+    ficha_medica_fields_2[1] = new_field(1, 40, 0, 21, 0, 0);
+    ficha_medica_fields_2[2] = new_field(1, 20, 2, 1, 0, 0);
+    ficha_medica_fields_2[3] = new_field(1, 40, 2, 21, 0, 0);
+    ficha_medica_fields_2[4] = new_field(1, 40, 7, 1, 0, 0);
+    ficha_medica_fields_2[5] = new_field(1, 40, 9, 1, 0, 0);
+    ficha_medica_fields_2[6] = new_field(1, 20, 9, 21, 0, 0);
+    ficha_medica_fields_2[7] = new_field(1, 40, 11, 1, 0, 0);
+    ficha_medica_fields_2[8] = new_field(1, 20, 11, 21, 0, 0);
+    
+    assert(ficha_medica_fields_2[0] != NULL &&
+           ficha_medica_fields_2[1] != NULL &&
+           ficha_medica_fields_2[2] != NULL &&
+           ficha_medica_fields_2[3] != NULL &&
+           ficha_medica_fields_2[4] != NULL &&
+           ficha_medica_fields_2[5] != NULL &&
+           ficha_medica_fields_2[6] != NULL &&
+           ficha_medica_fields_2[7] != NULL &&
+           ficha_medica_fields_2[8] != NULL);
+    
+    set_field_buffer(ficha_medica_fields_2[0], 0, "Peso");
+    set_field_buffer(ficha_medica_fields_2[1], 0, "");
+    set_field_buffer(ficha_medica_fields_2[2], 0, "Estatura");
+    set_field_buffer(ficha_medica_fields_2[3], 0, "");
+    set_field_buffer(ficha_medica_fields_2[4], 0, "Contacto de emergencia:");
+    set_field_buffer(ficha_medica_fields_2[5], 0, "Nombres");
+    set_field_buffer(ficha_medica_fields_2[6], 0, "");
+    set_field_buffer(ficha_medica_fields_2[7], 0, "Numero");
+    set_field_buffer(ficha_medica_fields_2[8], 0, "");
+    
+    set_field_opts(ficha_medica_fields_2[0], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(ficha_medica_fields_2[1], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(ficha_medica_fields_2[2], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(ficha_medica_fields_2[3], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(ficha_medica_fields_2[4], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(ficha_medica_fields_2[5], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(ficha_medica_fields_2[6], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    set_field_opts(ficha_medica_fields_2[7], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
+    set_field_opts(ficha_medica_fields_2[8], O_VISIBLE | O_PUBLIC | O_EDIT | O_ACTIVE);
+    
+    set_field_back(ficha_medica_fields_2[1], A_UNDERLINE);
+    set_field_back(ficha_medica_fields_2[3], A_UNDERLINE);
+    set_field_back(ficha_medica_fields_2[6], A_UNDERLINE);
+    set_field_back(ficha_medica_fields_2[8], A_UNDERLINE);
+    
+    ficha_medica_form_2 = new_form(ficha_medica_fields_2);
+    assert(ficha_medica_form_2 != NULL);
+    set_form_win(ficha_medica_form_2, ficha_medica_2);
+    set_form_sub(ficha_medica_form_2, derwin(ficha_medica_2, 18, 76, 1, 1));
+    post_form(ficha_medica_form_2);
+    
+    refresh();
+    wrefresh(ficha_medica_body_2);
+    wrefresh(ficha_medica_2);
+    
+    while ((g = getch()))
+        driver_2(g);
 }
 
 
