@@ -31,8 +31,9 @@
 		C65B727820E99BBE00985A81 /* libform.5.4.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libform.5.4.tbd; path = usr/lib/libform.5.4.tbd; sourceTree = SDKROOT; };
 		C66E77EF20DD471B000FB3DD /* headers */ = {isa = PBXFileReference; lastKnownFileType = folder; path = headers; sourceTree = "<group>"; };
 		C66E77F020DD471B000FB3DD /* sources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sources; sourceTree = "<group>"; };
+		C68C38EC20EEE1AA0046A6B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text; name = en; path = en.lproj/ficha_medica2.txt; sourceTree = "<group>"; };
 		C6B6EB6E20D2EE6800EFAEBD /* prueba_nscurses */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = prueba_nscurses; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6B6EB7120D2EE6800EFAEBD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		C6B6EB7120D2EE6800EFAEBD /* main.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		C6B6EB7920D2F4A600EFAEBD /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -50,6 +51,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C68C38E920EEDF080046A6B7 /* files */ = {
+			isa = PBXGroup;
+			children = (
+				C68C38ED20EEE1AA0046A6B7 /* ficha_medica2.txt */,
+			);
+			path = files;
+			sourceTree = "<group>";
+		};
+		C68C38EA20EEE0380046A6B7 /* doctores */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = doctores;
+			sourceTree = "<group>";
+		};
 		C6B6EB6520D2EE6700EFAEBD = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +86,8 @@
 		C6B6EB7020D2EE6800EFAEBD /* prueba_nscurses */ = {
 			isa = PBXGroup;
 			children = (
+				C68C38EA20EEE0380046A6B7 /* doctores */,
+				C68C38E920EEDF080046A6B7 /* files */,
 				C66E77EF20DD471B000FB3DD /* headers */,
 				C66E77F020DD471B000FB3DD /* sources */,
 				C6B6EB7120D2EE6800EFAEBD /* main.cpp */,
@@ -150,6 +168,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C68C38ED20EEE1AA0046A6B7 /* ficha_medica2.txt */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C68C38EC20EEE1AA0046A6B7 /* en */,
+			);
+			name = ficha_medica2.txt;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C6B6EB7320D2EE6800EFAEBD /* Debug */ = {
@@ -258,6 +287,7 @@
 		C6B6EB7620D2EE6800EFAEBD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5ABN7RGC99;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -267,6 +297,7 @@
 		C6B6EB7720D2EE6800EFAEBD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5ABN7RGC99;
 				PRODUCT_NAME = "$(TARGET_NAME)";
