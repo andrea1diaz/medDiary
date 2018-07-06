@@ -66,6 +66,13 @@
 			path = doctores;
 			sourceTree = "<group>";
 		};
+		C696022820EFAB95003B5999 /* laboratorio */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = laboratorio;
+			sourceTree = "<group>";
+		};
 		C6B6EB6520D2EE6700EFAEBD = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +93,7 @@
 		C6B6EB7020D2EE6800EFAEBD /* prueba_nscurses */ = {
 			isa = PBXGroup;
 			children = (
+				C696022820EFAB95003B5999 /* laboratorio */,
 				C68C38EA20EEE0380046A6B7 /* doctores */,
 				C68C38E920EEDF080046A6B7 /* files */,
 				C66E77EF20DD471B000FB3DD /* headers */,

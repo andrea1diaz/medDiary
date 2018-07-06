@@ -43,6 +43,10 @@ const char *nextt_2[] = {"GUARDAR(F1)  "
                          "MENU(F3)",
 };
 
+const char *nextt_3[] = {"GUARDAR(F1)  "
+    "MENU(F2)",
+};
+
 const char *choiceslab[] = {
         "Hematologia",
         "Bioquimica Sangre",
@@ -50,7 +54,7 @@ const char *choiceslab[] = {
         "Inmunologia",
         "Drogas",
         "Heces",
-        "<< Atrás",
+        "Atrás",
 };
 
 const char *docs[] = { "Lista de Doctores", "Agregar Doctor"
@@ -61,6 +65,7 @@ int n_choices = sizeof(choices) / sizeof(char *);
 
 int n_nextt = sizeof(nextt) / sizeof(char *);
 int n_nextt_2 = sizeof(nextt_2) / sizeof(char *);
+int n_nextt_3 = sizeof(nextt_3) / sizeof(char *);
 
 int n_docs = sizeof(docs) / sizeof(char *);
 
@@ -118,8 +123,8 @@ void menulab(WINDOW *menu_winlab, int highlightlab)
     int x, y;
     startx = (80 - WIDTH) / 2;
     starty = (24 - HEIGHT) / 2;
-    x = 2;
-    y = 2;
+    x = 6;
+    y = 1;
     box(menu_winlab, 0, 0);
     for (int i = 0; i < n_choiceslab; ++i) {
         if (highlightlab == i + 1) /* High light the present choice */
@@ -179,7 +184,27 @@ void botones_2 (WINDOW *barra, int highlight)
     }
     wrefresh(barra);
 }
-
+void botones_3 (WINDOW *barra, int highlight)
+{
+    int x, y;
+    
+    x = 53;
+    y = 1;
+    box(barra, 0, 0);
+    for(int i = 0; i < n_nextt_3; ++i)
+    {
+        if(highlight == i + 1) /* High light the present choice */
+        {
+            //wattron(barra, A_REVERSE);
+            mvwprintw(barra, y, x, "%s", nextt_3[i]);
+            //wattroff(barra, A_REVERSE);
+        }
+        else
+            mvwprintw(barra, y, x, "%s", nextt_3[i]);
+        ++y;
+    }
+    wrefresh(barra);
+}
 
 
 //--------- intro. de variables -------
@@ -574,7 +599,7 @@ static void hem_driver_1(int f)
         case KEY_F(1):
         {
             fstream fm_file;
-            fm_file.open("laboratorio/Hematologia.txt", ios::out);
+            fm_file.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Hematologia.txt", ios::out);
             if (fm_file.is_open())
             {
                 /*fm_file << trim_whitespaces(field_buffer(lab_fields[1],0)) << "\n";
@@ -591,7 +616,7 @@ static void hem_driver_1(int f)
             break;
         }
 
-        case KEY_F(3):
+        case KEY_F(2):
         {
             hem_form = new_form(hem_fields);
             assert(hem_fields != NULL);
@@ -641,7 +666,7 @@ static void sangre_driver_1(int f)
         case KEY_F(1):
         {
             fstream fm_file;
-            fm_file.open("laboratorio/Sangre.txt", ios::out);
+            fm_file.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Sangre.txt", ios::out);
             if (fm_file.is_open())
             {
                 /*fm_file << trim_whitespaces(field_buffer(lab_fields[1],0)) << "\n";
@@ -658,7 +683,7 @@ static void sangre_driver_1(int f)
             break;
         }
 
-        case KEY_F(3):
+        case KEY_F(2):
         {
             sangre_form = new_form(sangre_fields);
             assert(sangre_fields != NULL);
@@ -688,7 +713,6 @@ static void sangre_driver_1(int f)
             form_driver(sangre_form, REQ_DEL_PREV);
             break;
 
-            // Delete the char under the cursor
         case KEY_DC:
             form_driver(sangre_form, REQ_DEL_CHAR);
             break;
@@ -708,7 +732,7 @@ static void orina_driver_1(int f)
         case KEY_F(1):
         {
             fstream fm_file;
-            fm_file.open("laboratorio/Orina.txt", ios::out);
+            fm_file.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Orina.txt", ios::out);
             if (fm_file.is_open())
             {
                 /*fm_file << trim_whitespaces(field_buffer(lab_fields[1],0)) << "\n";
@@ -725,7 +749,7 @@ static void orina_driver_1(int f)
             break;
         }
 
-        case KEY_F(3):
+        case KEY_F(2):
         {
             orina_form = new_form(orina_fields);
             assert(orina_fields != NULL);
@@ -754,8 +778,7 @@ static void orina_driver_1(int f)
         case 127:
             form_driver(orina_form, REQ_DEL_PREV);
             break;
-
-            // Delete the char under the cursor
+            
         case KEY_DC:
             form_driver(orina_form, REQ_DEL_CHAR);
             break;
@@ -775,7 +798,7 @@ static void inmu_driver_1(int f)
         case KEY_F(1):
         {
             fstream fm_file;
-            fm_file.open("laboratorio/Inmunologia.txt", ios::out);
+            fm_file.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Inmunologia.txt", ios::out);
             if (fm_file.is_open())
             {
                 /*fm_file << trim_whitespaces(field_buffer(lab_fields[1],0)) << "\n";
@@ -792,7 +815,7 @@ static void inmu_driver_1(int f)
             break;
         }
 
-        case KEY_F(3):
+        case KEY_F(2):
         {
             inmu_form = new_form(inmu_fields);
             assert(inmu_fields != NULL);
@@ -822,7 +845,6 @@ static void inmu_driver_1(int f)
             form_driver(inmu_form, REQ_DEL_PREV);
             break;
 
-            // Delete the char under the cursor
         case KEY_DC:
             form_driver(inmu_form, REQ_DEL_CHAR);
             break;
@@ -842,7 +864,7 @@ static void drugs_driver_1(int f)
         case KEY_F(1):
         {
             fstream fm_file;
-            fm_file.open("laboratorio/Drogas.txt", ios::out);
+            fm_file.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Drogas.txt", ios::out);
             if (fm_file.is_open())
             {
                 /*fm_file << trim_whitespaces(field_buffer(lab_fields[1],0)) << "\n";
@@ -859,7 +881,7 @@ static void drugs_driver_1(int f)
             break;
         }
 
-        case KEY_F(3):
+        case KEY_F(2):
         {
             drugs_form = new_form(drugs_fields);
             assert(drugs_fields != NULL);
@@ -889,7 +911,6 @@ static void drugs_driver_1(int f)
             form_driver(drugs_form, REQ_DEL_PREV);
             break;
 
-            // Delete the char under the cursor
         case KEY_DC:
             form_driver(drugs_form, REQ_DEL_CHAR);
             break;
@@ -909,7 +930,7 @@ static void heces_driver_1(int f)
         case KEY_F(1):
         {
             fstream fm_file;
-            fm_file.open("laboratorio/Heces.txt", ios::out);
+            fm_file.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Heces.txt", ios::out);
             if (fm_file.is_open())
             {
                 /*fm_file << trim_whitespaces(field_buffer(lab_fields[1],0)) << "\n";
@@ -926,7 +947,7 @@ static void heces_driver_1(int f)
             break;
         }
 
-        case KEY_F(3):
+        case KEY_F(2):
         {
             heces_form = new_form(heces_fields);
             assert(heces_fields != NULL);
@@ -956,7 +977,6 @@ static void heces_driver_1(int f)
             form_driver(heces_form, REQ_DEL_PREV);
             break;
 
-            // Delete the char under the cursor
         case KEY_DC:
             form_driver(heces_form, REQ_DEL_CHAR);
             break;
@@ -1079,6 +1099,8 @@ void form1 (int ch)
 
         wrefresh(doctores_menu);
      **/
+    set_field_back(ficha_medica_fields[1], A_UNDERLINE);
+    set_field_back(ficha_medica_fields[3], A_UNDERLINE);
     set_field_back(ficha_medica_fields[5], A_UNDERLINE);
     set_field_back(ficha_medica_fields[7], A_UNDERLINE);
     set_field_back(ficha_medica_fields[9], A_UNDERLINE);
@@ -1514,7 +1536,7 @@ void hematologia (int h)
     barra = derwin(hem_body, 3, 78, 20, 1);
     assert(barra != NULL);
     box(barra, 0, 0);
-    botones(barra, highlight);
+    botones_3(barra, highlight);
     refresh();
     mvwprintw(hem_body, 1, 2, "RESULTADOS: PRUEBAS HEMATOLOGIA");
 
@@ -1555,21 +1577,21 @@ void hematologia (int h)
            hem_fields[14] != NULL &&
            hem_fields[15] != NULL);
 
-    set_field_buffer(hem_fields[0], 0, "Resultado 1");
+    set_field_buffer(hem_fields[0], 0, "ANTROMBINA:");
     set_field_buffer(hem_fields[1], 0, "");
-    set_field_buffer(hem_fields[2], 0, "Resultado 2");
+    set_field_buffer(hem_fields[2], 0, "FERRITINA:");
     set_field_buffer(hem_fields[3], 0, "");
-    set_field_buffer(hem_fields[4], 0, "Resultado 3");
+    set_field_buffer(hem_fields[4], 0, "FIBRINOGENO:");
     set_field_buffer(hem_fields[5], 0, "");
-    set_field_buffer(hem_fields[6], 0, "Resultado 4");
+    set_field_buffer(hem_fields[6], 0, "PROTEINA C:");
     set_field_buffer(hem_fields[7], 0, "");
-    set_field_buffer(hem_fields[8], 0, "Resultado 5");
+    set_field_buffer(hem_fields[8], 0, "PROTEINA S:");
     set_field_buffer(hem_fields[9], 0, "");
-    set_field_buffer(hem_fields[10], 0, "Resultado 6");
+    set_field_buffer(hem_fields[10], 0, "RETICULOCITOS:");
     set_field_buffer(hem_fields[11], 0, "");
-    set_field_buffer(hem_fields[12], 0, "Resultado 7");
+    set_field_buffer(hem_fields[12], 0, "PROTROMBINA:");
     set_field_buffer(hem_fields[13], 0, "");
-    set_field_buffer(hem_fields[14], 0, "Resultado 8");
+    set_field_buffer(hem_fields[14], 0, "VITAMINA_B12:");
     set_field_buffer(hem_fields[15], 0, "");
 
     set_field_opts(hem_fields[0], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
@@ -1611,9 +1633,8 @@ void hematologia (int h)
 
 
     char new_fields[100];
-
     ifstream fm_read;
-    fm_read.open("laboratorio/Hematologia.txt");
+    fm_read.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Hematologia.txt");
 
     //fm_read >> new_fields;
     //set_field_buffer(ficha_medica_fields[1], 0, new_fields);
@@ -1655,7 +1676,7 @@ void bioquimica_sangre (int h)
     barra = derwin(sangre_body, 3, 78, 20, 1);
     assert(barra != NULL);
     box(barra, 0, 0);
-    botones(barra, highlight);
+    botones_3(barra, highlight);
     refresh();
     mvwprintw(sangre_body, 1, 2, "RESULTADOS: PRUEBAS DE SANGRE");
 
@@ -1696,21 +1717,21 @@ void bioquimica_sangre (int h)
            sangre_fields[14] != NULL &&
            sangre_fields[15] != NULL);
 
-    set_field_buffer(sangre_fields[0], 0, "Resultado 1");
+    set_field_buffer(sangre_fields[0], 0, "COLESTEROL TOTAL:");
     set_field_buffer(sangre_fields[1], 0, "");
-    set_field_buffer(sangre_fields[2], 0, "Resultado 2");
+    set_field_buffer(sangre_fields[2], 0, "COLESTEROL HDL:");
     set_field_buffer(sangre_fields[3], 0, "");
-    set_field_buffer(sangre_fields[4], 0, "Resultado 3");
+    set_field_buffer(sangre_fields[4], 0, "COLESTEROL LDL:");
     set_field_buffer(sangre_fields[5], 0, "");
-    set_field_buffer(sangre_fields[6], 0, "Resultado 4");
+    set_field_buffer(sangre_fields[6], 0, "TRIGLICERIDOS:");
     set_field_buffer(sangre_fields[7], 0, "");
-    set_field_buffer(sangre_fields[8], 0, "Resultado 5");
+    set_field_buffer(sangre_fields[8], 0, "GLUCOSA");
     set_field_buffer(sangre_fields[9], 0, "");
-    set_field_buffer(sangre_fields[10], 0, "Resultado 6");
+    set_field_buffer(sangre_fields[10], 0, "UREA:");
     set_field_buffer(sangre_fields[11], 0, "");
-    set_field_buffer(sangre_fields[12], 0, "Resultado 7");
+    set_field_buffer(sangre_fields[12], 0, "AMILASA:");
     set_field_buffer(sangre_fields[13], 0, "");
-    set_field_buffer(sangre_fields[14], 0, "Resultado 8");
+    set_field_buffer(sangre_fields[14], 0, "CKMB:");
     set_field_buffer(sangre_fields[15], 0, "");
 
     set_field_opts(sangre_fields[0], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
@@ -1754,7 +1775,7 @@ void bioquimica_sangre (int h)
     char new_fields[100];
 
     ifstream fm_read;
-    fm_read.open("laboratorio/Sangre.txt");
+    fm_read.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Sangre.txt");
 
     //fm_read >> new_fields;
     //set_field_buffer(ficha_medica_fields[1], 0, new_fields);
@@ -1796,7 +1817,7 @@ void bioquimica_orina (int h)
     barra = derwin(orina_body, 3, 78, 20, 1);
     assert(barra != NULL);
     box(barra, 0, 0);
-    botones(barra, highlight);
+    botones_3(barra, highlight);
     refresh();
     mvwprintw(orina_body, 1, 2, "RESULTADOS: PRUEBAS DE ORINA");
 
@@ -1837,21 +1858,21 @@ void bioquimica_orina (int h)
            orina_fields[14] != NULL &&
            orina_fields[15] != NULL);
 
-    set_field_buffer(orina_fields[0], 0, "Resultado 1");
+    set_field_buffer(orina_fields[0], 0, "UREA:");
     set_field_buffer(orina_fields[1], 0, "");
-    set_field_buffer(orina_fields[2], 0, "Resultado 2");
+    set_field_buffer(orina_fields[2], 0, "CREATININA:");
     set_field_buffer(orina_fields[3], 0, "");
-    set_field_buffer(orina_fields[4], 0, "Resultado 3");
+    set_field_buffer(orina_fields[4], 0, "AMILASA:");
     set_field_buffer(orina_fields[5], 0, "");
-    set_field_buffer(orina_fields[6], 0, "Resultado 4");
+    set_field_buffer(orina_fields[6], 0, "SODIO:");
     set_field_buffer(orina_fields[7], 0, "");
-    set_field_buffer(orina_fields[8], 0, "Resultado 5");
+    set_field_buffer(orina_fields[8], 0, "CALCIO:");
     set_field_buffer(orina_fields[9], 0, "");
-    set_field_buffer(orina_fields[10], 0, "Resultado 6");
+    set_field_buffer(orina_fields[10], 0, "CLORO:");
     set_field_buffer(orina_fields[11], 0, "");
-    set_field_buffer(orina_fields[12], 0, "Resultado 7");
+    set_field_buffer(orina_fields[12], 0, "GLUCOSA_ORINA:");
     set_field_buffer(orina_fields[13], 0, "");
-    set_field_buffer(orina_fields[14], 0, "Resultado 8");
+    set_field_buffer(orina_fields[14], 0, "ELECTROLITOS:");
     set_field_buffer(orina_fields[15], 0, "");
 
     set_field_opts(orina_fields[0], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
@@ -1895,7 +1916,7 @@ void bioquimica_orina (int h)
     char new_fields[100];
 
     ifstream fm_read;
-    fm_read.open("laboratorio/Orina.txt");
+    fm_read.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Orina.txt");
 
     //fm_read >> new_fields;
     //set_field_buffer(ficha_medica_fields[1], 0, new_fields);
@@ -1937,7 +1958,7 @@ void inmunologia(int h)
     barra = derwin(inmu_body, 3, 78, 20, 1);
     assert(barra != NULL);
     box(barra, 0, 0);
-    botones(barra, highlight);
+    botones_3(barra, highlight);
     refresh();
     mvwprintw(inmu_body, 1, 2, "RESULTADOS: PRUEBAS DE INMUNOLOGIA");
 
@@ -1978,21 +1999,21 @@ void inmunologia(int h)
            inmu_fields[14] != NULL &&
            inmu_fields[15] != NULL);
 
-    set_field_buffer(inmu_fields[0], 0, "Resultado 1");
+    set_field_buffer(inmu_fields[0], 0, "HERPES:");
     set_field_buffer(inmu_fields[1], 0, "");
-    set_field_buffer(inmu_fields[2], 0, "Resultado 2");
+    set_field_buffer(inmu_fields[2], 0, "RUBEOLA:");
     set_field_buffer(inmu_fields[3], 0, "");
-    set_field_buffer(inmu_fields[4], 0, "Resultado 3");
+    set_field_buffer(inmu_fields[4], 0, "SARAMPION:");
     set_field_buffer(inmu_fields[5], 0, "");
-    set_field_buffer(inmu_fields[6], 0, "Resultado 4");
+    set_field_buffer(inmu_fields[6], 0, "VARICELA:");
     set_field_buffer(inmu_fields[7], 0, "");
-    set_field_buffer(inmu_fields[8], 0, "Resultado 5");
+    set_field_buffer(inmu_fields[8], 0, "TOXOPLASMA:");
     set_field_buffer(inmu_fields[9], 0, "");
-    set_field_buffer(inmu_fields[10], 0, "Resultado 6");
+    set_field_buffer(inmu_fields[10], 0, "EPSTEIN:");
     set_field_buffer(inmu_fields[11], 0, "");
-    set_field_buffer(inmu_fields[12], 0, "Resultado 7");
+    set_field_buffer(inmu_fields[12], 0, "HELICOBACTER:");
     set_field_buffer(inmu_fields[13], 0, "");
-    set_field_buffer(inmu_fields[14], 0, "Resultado 8");
+    set_field_buffer(inmu_fields[14], 0, "VIH:");
     set_field_buffer(inmu_fields[15], 0, "");
 
     set_field_opts(inmu_fields[0], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
@@ -2037,7 +2058,7 @@ void inmunologia(int h)
     char new_fields[100];
 
     ifstream fm_read;
-    fm_read.open("laboratorio/Inmunologia.txt");
+    fm_read.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Inmunologia.txt");
 
     //fm_read >> new_fields;
     //set_field_buffer(ficha_medica_fields[1], 0, new_fields);
@@ -2079,7 +2100,7 @@ void drogas (int h)
     barra = derwin(drugs_body, 3, 78, 20, 1);
     assert(barra != NULL);
     box(barra, 0, 0);
-    botones(barra, highlight);
+    botones_3(barra, highlight);
     refresh();
     mvwprintw(drugs_body, 1, 2, "RESULTADOS: PRUEBAS DE DROGAS");
 
@@ -2120,21 +2141,21 @@ void drogas (int h)
            drugs_fields[14] != NULL &&
            drugs_fields[15] != NULL);
 
-    set_field_buffer(drugs_fields[0], 0, "Resultado 1");
+    set_field_buffer(drugs_fields[0], 0, "ANFETAMINAS:");
     set_field_buffer(drugs_fields[1], 0, "");
-    set_field_buffer(drugs_fields[2], 0, "Resultado 2");
+    set_field_buffer(drugs_fields[2], 0, "DIAZEPAN");
     set_field_buffer(drugs_fields[3], 0, "");
-    set_field_buffer(drugs_fields[4], 0, "Resultado 3");
+    set_field_buffer(drugs_fields[4], 0, "LITIO:");
     set_field_buffer(drugs_fields[5], 0, "");
-    set_field_buffer(drugs_fields[6], 0, "Resultado 4");
+    set_field_buffer(drugs_fields[6], 0, "EPAMIN:");
     set_field_buffer(drugs_fields[7], 0, "");
-    set_field_buffer(drugs_fields[8], 0, "Resultado 5");
+    set_field_buffer(drugs_fields[8], 0, "METANFETAMINAS:");
     set_field_buffer(drugs_fields[9], 0, "");
-    set_field_buffer(drugs_fields[10], 0, "Resultado 6");
+    set_field_buffer(drugs_fields[10], 0, "COCAINA:");
     set_field_buffer(drugs_fields[11], 0, "");
-    set_field_buffer(drugs_fields[12], 0, "Resultado 7");
+    set_field_buffer(drugs_fields[12], 0, "MARIHUANA:");
     set_field_buffer(drugs_fields[13], 0, "");
-    set_field_buffer(drugs_fields[14], 0, "Resultado 8");
+    set_field_buffer(drugs_fields[14], 0, "OPIACEOS:");
     set_field_buffer(drugs_fields[15], 0, "");
 
     set_field_opts(drugs_fields[0], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
@@ -2179,7 +2200,7 @@ void drogas (int h)
     char new_fields[100];
 
     ifstream fm_read;
-    fm_read.open("laboratorio/Drogas.txt");
+    fm_read.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Drogas.txt");
 
     //fm_read >> new_fields;
     //set_field_buffer(ficha_medica_fields[1], 0, new_fields);
@@ -2221,7 +2242,7 @@ void prueba_heces(int h)
     barra = derwin(heces_body, 3, 78, 20, 1);
     assert(barra != NULL);
     box(barra, 0, 0);
-    botones(barra, highlight);
+    botones_3(barra, highlight);
     refresh();
     mvwprintw(heces_body, 1, 2, "RESULTADOS: PRUEBAS DE HECES");
 
@@ -2262,21 +2283,21 @@ void prueba_heces(int h)
            heces_fields[14] != NULL &&
            heces_fields[15] != NULL);
 
-    set_field_buffer(heces_fields[0], 0, "Resultado 1");
+    set_field_buffer(heces_fields[0], 0, "COPROCULTIVO:");
     set_field_buffer(heces_fields[1], 0, "");
-    set_field_buffer(heces_fields[2], 0, "Resultado 2");
+    set_field_buffer(heces_fields[2], 0, "LEUCOCITOS");
     set_field_buffer(heces_fields[3], 0, "");
-    set_field_buffer(heces_fields[4], 0, "Resultado 3");
+    set_field_buffer(heces_fields[4], 0, "COPROPARASITARIO:");
     set_field_buffer(heces_fields[5], 0, "");
-    set_field_buffer(heces_fields[6], 0, "Resultado 4");
+    set_field_buffer(heces_fields[6], 0, "ROTAVIRUS:");
     set_field_buffer(heces_fields[7], 0, "");
-    set_field_buffer(heces_fields[8], 0, "Resultado 5");
+    set_field_buffer(heces_fields[8], 0, "SUSTANCIAS REDUCTORAS:");
     set_field_buffer(heces_fields[9], 0, "");
-    set_field_buffer(heces_fields[10], 0, "Resultado 6");
+    set_field_buffer(heces_fields[10], 0, "FRAGILIDAD GLOBULAR:");
     set_field_buffer(heces_fields[11], 0, "");
-    set_field_buffer(heces_fields[12], 0, "Resultado 7");
+    set_field_buffer(heces_fields[12], 0, "THEVENON:");
     set_field_buffer(heces_fields[13], 0, "");
-    set_field_buffer(heces_fields[14], 0, "Resultado 8");
+    set_field_buffer(heces_fields[14], 0, "TEST DE GRAHAM:");
     set_field_buffer(heces_fields[15], 0, "");
 
     set_field_opts(heces_fields[0], O_VISIBLE | O_PUBLIC | O_AUTOSKIP);
@@ -2331,7 +2352,7 @@ void prueba_heces(int h)
     char new_fields[100];
 
     ifstream fm_read;
-    fm_read.open("laboratorio/Heces.txt");
+    fm_read.open("/Users/andreadiaz/projects/medDiary/prueba_nscurses/prueba_nscurses/laboratorio/Heces.txt");
 
     //fm_read >> new_fields;
     //set_field_buffer(ficha_medica_fields[1], 0, new_fields);
@@ -2545,7 +2566,6 @@ int main()
     noecho();
     cbreak();
     keypad(stdscr, TRUE);
-    mousemask(ALL_MOUSE_EVENTS,NULL);
 
 
     //------ barra de inicio
@@ -2616,6 +2636,13 @@ int main()
                 {
                     labmenu(a);
                 }
+                
+                if (choice == 4)
+                {
+                    break;
+                }
+                
+                
 
             default:
                 refresh();
